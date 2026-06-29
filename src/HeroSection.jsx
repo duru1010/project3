@@ -1,455 +1,242 @@
-// "use client";
-
-// import { motion } from "framer-motion";
-
-// export default function HeroSection() {
-//   const dots = Array.from({ length: 24 });
-
-//   return (
-//     <section className="relative w-full h-screen bg-[#f3f4f6] overflow-hidden">
-      
-//       {/* FLOATING NAVBAR */}
-//       <motion.nav 
-//         initial={{ y: -100, opacity: 0 }}
-//         animate={{ y: 0, opacity: 1 }}
-//         transition={{ duration: 0.8, ease: "easeOut" }}
-//         className="absolute top-6 left-1/2 -translate-x-1/2 w-[90%] md:w-[80%] z-50 flex items-center justify-between px-8 py-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-xl"
-//       >
-//         <div className="text-xl font-bold tracking-wide text-black">
-//           JM<span className="text-orange-500">KC</span>
-//         </div>
-//         <div className="hidden md:flex gap-8 text-sm text-gray-800 font-medium">
-//           {["Service", "About", "Blog", "Contact"].map((item) => (
-//             <a key={item} href="#" className="hover:text-orange-600 transition-colors">{item}</a>
-//           ))}
-//         </div>
-//         <button className="px-5 py-2 rounded-full bg-black text-white text-sm hover:bg-gray-800 transition-all">
-//           Get in touch
-//         </button>
-//       </motion.nav>
-
-//       {/* SPOTLIGHT EFFECT */}
-//       <div className="absolute -left-[200px] top-[10%] w-[500px] h-[500px] bg-orange-400/20 blur-[150px] rounded-full pointer-events-none z-0"></div>
-
-//       {/* MAIN */}
-//       <div className="flex w-full h-full relative z-10 pt-20">
-        
-//         {/* LEFT */}
-//         <div className="w-full md:w-1/2 flex flex-col justify-center px-10 md:px-20 lg:px-28">
-//           <motion.h1
-//             initial={{ opacity: 0, x: -100 }}
-//             animate={{ opacity: 1, x: 0 }}
-//             transition={{ duration: 1, ease: "easeOut" }}
-//             className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-[1.05]"
-//           >
-//             <span className="text-black">TESTING </span>
-//             <span className="text-orange-500">THE </span>
-//             <br />
-//             <span className="text-gray-800">SOFTWARE </span>
-//             <span className="text-indigo-600">FOR </span>
-//             <br />
-//             <span className="text-purple-600">YOUR </span>
-//             <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-500 to-red-600">
-//               BUSINESS
-//             </span>
-//           </motion.h1>
-
-//           {/* TWO CALL-TO-ACTION BUTTONS */}
-//           <motion.div 
-//             initial={{ opacity: 0, y: 20 }}
-//             animate={{ opacity: 1, y: 0 }}
-//             transition={{ duration: 0.8, delay: 0.6 }}
-//             className="mt-10 flex gap-4"
-//           >
-//             <button className="px-8 py-4 rounded-full bg-orange-500 text-white font-semibold shadow-lg hover:bg-orange-600 transition-all">
-//               Get in touch
-//             </button>
-//             <button className="px-8 py-4 rounded-full border-2 border-black text-black font-semibold hover:bg-black hover:text-white transition-all">
-//               View Projects
-//             </button>
-//           </motion.div>
-//         </div>
-
-//         {/* RIGHT */}
-//         <div className="w-full md:w-1/2 relative flex items-center justify-center">
-//           <div className="absolute inset-0 bg-[#15171c] rounded-l-[70px]" />
-
-//           {/* ORBIT SYSTEM */}
-//           <motion.div
-//             className="absolute w-[20px] h-[520px] flex items-center justify-center z-10"
-//             animate={{ rotate: 360 }}
-//             transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
-//           >
-//             {dots.map((_, i) => (
-//               <div
-//                 key={i}
-//                 className="absolute w-full h-full flex justify-center"
-//                 style={{ transform: `rotate(${(i / dots.length) * 360}deg)` }}
-//               >
-//                 <div className="w-2 h-2 rounded-full bg-white/40" />
-//               </div>
-//             ))}
-//           </motion.div>
-
-//           {/* SPHERE */}
-//           <motion.div
-//             className="relative w-[300px] h-[300px] md:w-[420px] md:h-[420px] rounded-full z-20 shadow-2xl"
-//             style={{
-//               background: "radial-gradient(circle at 30% 30%, #ffffff 0%, #f472b6 40%, #7c3aed 70%, #15171c 100%)",
-//             }}
-//             initial={{ opacity: 0, y: 100 }}
-//             animate={{ opacity: 1, y: 0, rotate: -360 }}
-//             transition={{
-//               y: { duration: 1.2, type: "spring", stiffness: 70 },
-//               rotate: { repeat: Infinity, duration: 30, ease: "linear" },
-//             }}
-//           />
-//         </div>
-//       </div>
-//     </section>
-//   );
-// }
-
-
-
-// "use client";
-
-// import { motion } from "framer-motion";
-// import { useEffect, useRef } from "react";
-
-// export default function HeroSection() {
-//   const dots = Array.from({ length: 24 });
-//   const canvasRef = useRef(null);
-
-//   // Particle Network Effect Logic
-//   useEffect(() => {
-//     const canvas = canvasRef.current;
-//     const ctx = canvas.getContext("2d");
-//     let particles = [];
-//     const particleCount = 60;
-    
-//     canvas.width = window.innerWidth;
-//     canvas.height = window.innerHeight;
-
-//     class Particle {
-//       constructor() {
-//         this.x = Math.random() * canvas.width;
-//         this.y = Math.random() * canvas.height;
-//         this.vx = (Math.random() - 0.5) * 0.5;
-//         this.vy = (Math.random() - 0.5) * 0.5;
-//         this.radius = Math.random() * 2 + 1;
-//       }
-//       draw() {
-//         ctx.beginPath();
-//         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-//         ctx.fillStyle = "rgba(100, 200, 255, 0.4)";
-//         ctx.fill();
-//       }
-//       update() {
-//         this.x += this.vx;
-//         this.y += this.vy;
-//         if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-//         if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-//       }
-//     }
-
-//     for (let i = 0; i < particleCount; i++) particles.push(new Particle());
-
-//     function animate() {
-//       ctx.clearRect(0, 0, canvas.width, canvas.height);
-//       particles.forEach((p, i) => {
-//         p.update();
-//         p.draw();
-//         for (let j = i + 1; j < particles.length; j++) {
-//           let dx = p.x - particles[j].x;
-//           let dy = p.y - particles[j].y;
-//           let distance = Math.sqrt(dx * dx + dy * dy);
-//           if (distance < 150) {
-//             ctx.beginPath();
-//             ctx.strokeStyle = `rgba(100, 200, 255, ${0.2 * (1 - distance / 150)})`;
-//             ctx.lineWidth = 0.5;
-//             ctx.moveTo(p.x, p.y);
-//             ctx.lineTo(particles[j].x, particles[j].y);
-//             ctx.stroke();
-//           }
-//         }
-//       });
-//       requestAnimationFrame(animate);
-//     }
-//     animate();
-
-//     const handleResize = () => {
-//         canvas.width = window.innerWidth;
-//         canvas.height = window.innerHeight;
-//     };
-//     window.addEventListener('resize', handleResize);
-//     return () => window.removeEventListener('resize', handleResize);
-//   }, []);
-
-//   return (
-//     <section className="relative w-full h-screen bg-[#050508] overflow-hidden text-white">
-      
-//       {/* PARTICLE NETWORK BACKGROUND */}
-//       <canvas ref={canvasRef} className="absolute inset-0 z-0" />
-      
-//       {/* FLOATING NAVBAR */}
-//       <motion.nav 
-//         initial={{ y: -100, opacity: 0 }}
-//         animate={{ y: 0, opacity: 1 }}
-//         transition={{ duration: 0.8, ease: "easeOut" }}
-//         className="absolute top-6 left-1/2 -translate-x-1/2 w-[90%] md:w-[80%] z-50 flex items-center justify-between px-8 py-4 rounded-full bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl"
-//       >
-//         <div className="text-xl font-bold tracking-wide">
-//           JM<span className="text-orange-500">KC</span>
-//         </div>
-//         <div className="hidden md:flex gap-8 text-sm font-medium text-gray-300">
-//           {["Service", "About", "Blog", "Contact"].map((item) => (
-//             <a key={item} href="#" className="hover:text-orange-500 transition-colors">{item}</a>
-//           ))}
-//         </div>
-//         <button className="px-5 py-2 rounded-full bg-white text-black text-sm font-semibold hover:bg-gray-200 transition-all">
-//           Get in touch
-//         </button>
-//       </motion.nav>
-
-//       {/* MAIN CONTENT */}
-//       <div className="flex w-full h-full relative z-10 pt-20">
-        
-//         {/* LEFT */}
-//         <div className="w-full md:w-1/2 flex flex-col justify-center px-10 md:px-20 lg:px-28">
-//           <motion.h1
-//             initial={{ opacity: 0, x: -100 }}
-//             animate={{ opacity: 1, x: 0 }}
-//             className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-[1.05]"
-//           >
-//             <span className="text-white">TESTING </span>
-//             <span className="text-orange-500">THE </span><br />
-//             <span className="text-gray-300">SOFTWARE </span>
-//             <span className="text-blue-400">FOR </span><br />
-//             <span className="text-purple-400">YOUR </span>
-//             <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-red-500">BUSINESS</span>
-//           </motion.h1>
-
-//           <motion.div className="mt-10 flex gap-4">
-//             <button className="px-8 py-4 rounded-full bg-orange-500 text-white font-semibold shadow-lg shadow-orange-500/20 hover:scale-105 transition-all">
-//               Get in touch
-//             </button>
-//           </motion.div>
-//         </div>
-
-//         {/* RIGHT */}
-//         <div className="w-full md:w-1/2 relative flex items-center justify-center cursor-grab active:cursor-grabbing">
-//           {/* Subtle dark glass effect */}
-//           <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px] rounded-l-[70px]" />
-
-//           {/* ORBIT SYSTEM */}
-//           <motion.div
-//             className="absolute w-[20px] h-[520px] flex items-center justify-center z-10 pointer-events-none"
-//             animate={{ rotate: 360 }}
-//             transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
-//           >
-//             {dots.map((_, i) => (
-//               <div
-//                 key={i}
-//                 className="absolute w-full h-full flex justify-center"
-//                 style={{ transform: `rotate(${(i / dots.length) * 360}deg)` }}
-//               >
-//                 <div className="w-2 h-2 rounded-full bg-white/20" />
-//               </div>
-//             ))}
-//           </motion.div>
-
-//           {/* 3D INTERACTIVE SPHERE */}
-//           <motion.div
-//             className="relative w-[300px] h-[300px] md:w-[420px] md:h-[420px] rounded-full z-20"
-//             style={{
-//               background: "radial-gradient(circle at 35% 35%, #ffffff 0%, #f472b6 40%, #7c3aed 70%, #050508 100%)",
-//               boxShadow: "inset -20px -20px 50px rgba(0,0,0,0.8), 0 0 50px rgba(124, 58, 237, 0.3)",
-//               cursor: "pointer",
-//             }}
-//             initial={{ opacity: 0, y: 100, scale: 0.8 }}
-//             animate={{ opacity: 1, y: 0, scale: 1, rotate: -360 }}
-//             transition={{
-//               y: { duration: 1.2, type: "spring", stiffness: 70 },
-//               rotate: { repeat: Infinity, duration: 30, ease: "linear" },
-//             }}
-//             whileHover={{ scale: 1.05, boxShadow: "inset -20px -20px 50px rgba(0,0,0,0.8), 0 0 80px rgba(124, 58, 237, 0.5)" }}
-//             whileTap={{ scale: 0.95, rotate: 0 }}
-//           />
-//         </div>
-//       </div>
-//     </section>
-//   );
-// }
-
-
-
 
 "use client";
 
-import { motion } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 
 export default function HeroSection() {
+  const [menuOpen, setMenuOpen] = useState(false);
   const dots = Array.from({ length: 24 });
   const canvasRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
+
     let particles = [];
-    const particleCount = 80; // Slightly more particles for density
-    
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    let animationId;
+
+    const particleCount = 150; // Increased particles
+    const mouse = { x: null, y: null, radius: 150 };
+
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    const handleMouseMove = (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
 
     class Particle {
       constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.4;
-        this.vy = (Math.random() - 0.5) * 0.4;
-        this.radius = Math.random() * 2 + 1.5;
+
+        this.vx = (Math.random() - 0.5) * 0.6;
+        this.vy = (Math.random() - 0.5) * 0.6;
+
+        // Bigger particles
+        this.radius = Math.random() * 3 + 2;
       }
+
       draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        // Bright blue/white glow color
-        ctx.fillStyle = "#A3C4FF"; 
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = "#60A5FA";
+
+        // Maximum opacity particles
+        ctx.fillStyle = "rgba(255,255,255,1)";
         ctx.fill();
-        ctx.shadowBlur = 0; // Reset for performance
       }
+
       update() {
         this.x += this.vx;
         this.y += this.vy;
-        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+
+        // Mouse repulsion
+        if (mouse.x !== null) {
+          const dx = this.x - mouse.x;
+          const dy = this.y - mouse.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < mouse.radius) {
+            const force = (mouse.radius - distance) / mouse.radius;
+            const angle = Math.atan2(dy, dx);
+
+            this.x += Math.cos(angle) * force * 6;
+            this.y += Math.sin(angle) * force * 6;
+          }
+        }
+
+        // Bounce from edges
+        if (this.x <= 0 || this.x >= canvas.width) this.vx *= -1;
+        if (this.y <= 0 || this.y >= canvas.height) this.vy *= -1;
       }
     }
 
-    for (let i = 0; i < particleCount; i++) particles.push(new Particle());
+    // Create particles
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
 
-    function animate() {
+    const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+
       particles.forEach((p, i) => {
         p.update();
         p.draw();
+
         for (let j = i + 1; j < particles.length; j++) {
-          let dx = p.x - particles[j].x;
-          let dy = p.y - particles[j].y;
-          let distance = Math.sqrt(dx * dx + dy * dy);
-          if (distance < 180) {
+          const dx = p.x - particles[j].x;
+          const dy = p.y - particles[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < 160) {
+            // Increased line opacity
+            ctx.strokeStyle = `rgba(255,255,255,${
+              0.9 * (1 - distance / 160)
+            })`;
+
+            ctx.lineWidth = 1;
+
             ctx.beginPath();
-            // High visibility glowing lines
-            ctx.strokeStyle = `rgba(163, 196, 255, ${0.4 * (1 - distance / 180)})`;
-            ctx.shadowBlur = 5;
-            ctx.shadowColor = "#3B82F6";
-            ctx.lineWidth = 1.5;
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(particles[j].x, particles[j].y);
             ctx.stroke();
-            ctx.shadowBlur = 0;
           }
         }
       });
-      requestAnimationFrame(animate);
-    }
+
+      animationId = requestAnimationFrame(animate);
+    };
+
     animate();
+
+    return () => {
+      cancelAnimationFrame(animationId);
+      window.removeEventListener("resize", resizeCanvas);
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
   }, []);
 
   return (
-    // Deepest black background
-    <section className="relative w-full h-screen bg-[#000000] overflow-hidden text-white">
-      
-      {/* GLOWING NETWORK LAYER */}
-      <canvas ref={canvasRef} className="absolute inset-1 z-100" />
-      
-      {/* UI Elements remain with high contrast */}
-      <motion.nav 
-         initial={{ y: -100, opacity: 0 }}
-         animate={{ y: 0, opacity: 1 }}
-         transition={{ duration: 0.8, ease: "easeOut" }}
-         className="absolute top-6 left-1/2 -translate-x-1/2 w-[90%] md:w-[80%] z-50 flex items-center justify-between px-8 py-4 rounded-full bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl"
-       >
-         <div className="text-xl font-bold tracking-wide">
-           JM<span className="text-orange-500">KC</span>
-         </div>
-         <div className="hidden md:flex gap-8 text-sm font-medium text-gray-300">
-           {["Service", "About", "Blog", "Contact"].map((item) => (
-             <a key={item} href="#" className="hover:text-orange-500 transition-colors">{item}</a>
-           ))}
-         </div>
-         <button className="px-5 py-2 rounded-full bg-white text-black text-sm font-semibold hover:bg-gray-200 transition-all">
-           Get in touch
-         </button>
-    </motion.nav>
+    <section className="relative w-full min-h-screen bg-black overflow-hidden text-white flex flex-col">
+      {/* PARTICLE BACKGROUND */}
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full z-0 pointer-events-none"
+      />
 
-      {/* Main Content remains here... */}
-      <div className="flex w-full h-full relative z-10 pt-20">
-        
-      {/* LEFT */}
-         <div className="w-full md:w-1/2 flex flex-col justify-center px-10 md:px-20 lg:px-28">
-         <motion.h1
-  initial={{ opacity: 0, x: -100 }}
-  animate={{ opacity: 1, x: 0 }}
-  className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-[1.1]"
->
-  <span className="text-white">NEXT GENERATION </span><br />
-  <span className="text-blue-400">NETWORK </span>
-  <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-    SOLUTIONS
-  </span>
-</motion.h1>
+      {/* Optional glow overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-900/10 to-transparent z-[1]" />
 
-           <motion.div className="mt-10 flex gap-4">
-             <button className="px-8 py-4 rounded-full bg-orange-500 text-white font-semibold shadow-lg shadow-orange-500/20 hover:scale-105 transition-all">
-               Get in touch
-             </button>
-           </motion.div>
+      {/* NAVBAR */}
+      <nav className="relative z-50 flex items-center justify-between px-6 py-6 w-full max-w-7xl mx-auto">
+        <div className="text-xl font-bold">
+          JM<span className="text-orange-500">KC</span>
         </div>
 
-         {/* RIGHT */}
-         <div className="w-full md:w-1/2 relative flex items-center justify-center cursor-grab active:cursor-grabbing">
-           {/* Subtle dark glass effect */}
-           <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px] rounded-l-[70px]" />
+        <div className="hidden md:flex gap-8 text-sm font-medium text-gray-300">
+          {["Service", "About", "Blog", "Contact"].map((item) => (
+            <a
+              key={item}
+              href="#"
+              className="hover:text-orange-500 transition-colors"
+            >
+              {item}
+            </a>
+          ))}
+        </div>
 
-           {/* ORBIT SYSTEM */}
-           <motion.div
-             className="absolute w-[20px] h-[520px] flex items-center justify-center z-10 pointer-events-none"
-             animate={{ rotate: 360 }}
-             transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
-           >
-             {dots.map((_, i) => (
-               <div
+        <button
+          className="md:hidden text-2xl"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          ☰
+        </button>
+
+        <button className="hidden md:block px-5 py-2 rounded-full bg-white text-black text-sm font-semibold hover:bg-gray-200">
+          Get in touch
+        </button>
+      </nav>
+
+      {/* MOBILE MENU */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="md:hidden absolute top-20 left-0 w-full bg-black/90 p-6 flex flex-col gap-4 text-center z-40"
+          >
+            {["Service", "About", "Blog", "Contact"].map((item) => (
+              <a key={item} href="#" className="text-lg">
+                {item}
+              </a>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* HERO CONTENT */}
+      <div className="flex-1 flex flex-col lg:flex-row items-center justify-center relative z-10 p-6 gap-10">
+        {/* TEXT */}
+        <motion.div
+          initial={{ x: -300, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 1.8 }}
+          className="text-center lg:text-left"
+        >
+          <h1 className="text-4xl md:text-7xl font-extrabold leading-tight">
+            NEXT GENERATION <br />
+            <span className="text-blue-400">NETWORK </span>
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+              SOLUTIONS
+            </span>
+          </h1>
+
+          <button className="mt-8 px-8 py-4 rounded-full bg-orange-500 font-semibold hover:scale-105 transition-transform">
+            Get in touch
+          </button>
+        </motion.div>
+
+        {/* SPHERE */}
+        <motion.div
+          initial={{ y: 400, opacity: 0, scale: 0.7 }}
+          animate={{ y: 0, opacity: 1, scale: 1 }}
+          transition={{ duration: 2, delay: 0.3 }}
+          className="relative w-[300px] h-[300px] md:w-[450px] md:h-[450px] flex items-center justify-center"
+        >
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{
+              repeat: Infinity,
+              duration: 20,
+              ease: "linear",
+            }}
+            className="absolute inset-0"
+          >
+            {dots.map((_, i) => (
+              <div
                 key={i}
-                 className="absolute w-full h-full flex justify-center"
-                 style={{ transform: `rotate(${(i / dots.length) * 360}deg)` }}
-               >
-                 <div className="w-2 h-2 rounded-full bg-white/20" />
-               </div>
-             ))}
-       </motion.div>
+                className="absolute w-full h-full flex justify-center"
+                style={{
+                  transform: `rotate(${(i / dots.length) * 360}deg)`,
+                }}
+              >
+                <div className="w-2 h-2 rounded-full bg-white/40" />
+              </div>
+            ))}
+          </motion.div>
 
-           {/* 3D INTERACTIVE SPHERE */}
-           <motion.div
-           className="relative w-[300px] h-[300px] md:w-[420px] md:h-[420px] rounded-full z-20"
-             style={{
-               background: "radial-gradient(circle at 35% 35%, #ffffff 0%, #f472b6 40%, #7c3aed 70%, #050508 100%)",
-               boxShadow: "inset -20px -20px 50px rgba(0,0,0,0.8), 0 0 50px rgba(124, 58, 237, 0.3)",
-               cursor: "pointer",
-             }}
-             initial={{ opacity: 0, y: 100, scale: 0.8 }}
-             animate={{ opacity: 1, y: 0, scale: 1, rotate: -360 }}
-             transition={{
-               y: { duration: 1.2, type: "spring", stiffness: 70 },
-               rotate: { repeat: Infinity, duration: 30, ease: "linear" },
-             }}
-             whileHover={{ scale: 1.05, boxShadow: "inset -20px -20px 50px rgba(0,0,0,0.8), 0 0 80px rgba(124, 58, 237, 0.5)" }}
-             whileTap={{ scale: 0.95, rotate: 0 }}
-           />
-         </div>
+          <div className="w-[200px] h-[200px] md:w-[300px] md:h-[300px] rounded-full bg-gradient-to-tr from-orange-400 to-purple-600 shadow-[0_0_80px_rgba(124,58,237,0.8)]" />
+        </motion.div>
       </div>
     </section>
   );
