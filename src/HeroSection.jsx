@@ -1,4 +1,3 @@
-
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
@@ -11,17 +10,34 @@ export default function HeroSection() {
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
+
     const ctx = canvas.getContext("2d");
-
-    let particles = [];
     let animationId;
+    let particles = [];
 
-    const particleCount = 150; // Increased particles
-    const mouse = { x: null, y: null, radius: 150 };
+    const mouse = {
+      x: null,
+      y: null,
+      radius: 150,
+    };
 
+    const isMobile = window.innerWidth < 768;
+    const particleCount = isMobile ? 100 : 150;
+    const maxDistance = isMobile ? 200 : 160;
+
+    // Better rendering on mobile
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const dpr = window.devicePixelRatio || 1;
+
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
+
+      ctx.setTransform(1, 0, 0, 1, 0, 0); // reset transform
+      ctx.scale(dpr, dpr);
     };
 
     resizeCanvas();
@@ -36,21 +52,23 @@ export default function HeroSection() {
 
     class Particle {
       constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
+        this.x = Math.random() * window.innerWidth;
+        this.y = Math.random() * window.innerHeight;
 
         this.vx = (Math.random() - 0.5) * 0.6;
         this.vy = (Math.random() - 0.5) * 0.6;
 
-        // Bigger particles
-        this.radius = Math.random() * 3 + 2;
+        // Larger particles on mobile
+        this.radius = isMobile
+          ? Math.random() * 4 + 3
+          : Math.random() * 3 + 2;
       }
 
       draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
 
-        // Maximum opacity particles
+        // Bright particles
         ctx.fillStyle = "rgba(255,255,255,1)";
         ctx.fill();
       }
@@ -59,7 +77,7 @@ export default function HeroSection() {
         this.x += this.vx;
         this.y += this.vy;
 
-        // Mouse repulsion
+        // Mouse interaction
         if (mouse.x !== null) {
           const dx = this.x - mouse.x;
           const dy = this.y - mouse.y;
@@ -74,9 +92,9 @@ export default function HeroSection() {
           }
         }
 
-        // Bounce from edges
-        if (this.x <= 0 || this.x >= canvas.width) this.vx *= -1;
-        if (this.y <= 0 || this.y >= canvas.height) this.vy *= -1;
+        // Bounce on edges
+        if (this.x <= 0 || this.x >= window.innerWidth) this.vx *= -1;
+        if (this.y <= 0 || this.y >= window.innerHeight) this.vy *= -1;
       }
     }
 
@@ -86,7 +104,7 @@ export default function HeroSection() {
     }
 
     const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
       particles.forEach((p, i) => {
         p.update();
@@ -97,15 +115,14 @@ export default function HeroSection() {
           const dy = p.y - particles[j].y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (distance < 160) {
-            // Increased line opacity
+          if (distance < maxDistance) {
+            ctx.beginPath();
             ctx.strokeStyle = `rgba(255,255,255,${
-              0.9 * (1 - distance / 160)
+              0.9 * (1 - distance / maxDistance)
             })`;
 
             ctx.lineWidth = 1;
 
-            ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(particles[j].x, particles[j].y);
             ctx.stroke();
@@ -127,16 +144,16 @@ export default function HeroSection() {
 
   return (
     <section className="relative w-full min-h-screen bg-black overflow-hidden text-white flex flex-col">
-      {/* PARTICLE BACKGROUND */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full z-0 pointer-events-none"
-      />
-
-      {/* Optional glow overlay */}
+      {/* Background Gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-900/10 to-transparent z-[1]" />
 
-      {/* NAVBAR */}
+      {/* Particle Canvas */}
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full z-[2] pointer-events-none"
+      />
+
+      {/* Navbar */}
       <nav className="relative z-50 flex items-center justify-between px-6 py-6 w-full max-w-7xl mx-auto">
         <div className="text-xl font-bold">
           JM<span className="text-orange-500">KC</span>
@@ -166,7 +183,7 @@ export default function HeroSection() {
         </button>
       </nav>
 
-      {/* MOBILE MENU */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -184,9 +201,9 @@ export default function HeroSection() {
         )}
       </AnimatePresence>
 
-      {/* HERO CONTENT */}
+      {/* Hero Content */}
       <div className="flex-1 flex flex-col lg:flex-row items-center justify-center relative z-10 p-6 gap-10">
-        {/* TEXT */}
+        {/* Left Content */}
         <motion.div
           initial={{ x: -300, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
@@ -206,7 +223,7 @@ export default function HeroSection() {
           </button>
         </motion.div>
 
-        {/* SPHERE */}
+        {/* Right Sphere */}
         <motion.div
           initial={{ y: 400, opacity: 0, scale: 0.7 }}
           animate={{ y: 0, opacity: 1, scale: 1 }}
